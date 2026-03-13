@@ -1,4 +1,4 @@
-# Система барков (Speech Barks) — полная документация
+# Z-уровни
 
 <div class="header" align="Left">
 
@@ -30,6 +30,10 @@
     - [CESharedZFlightSystem](#CESharedZFlightSystem)
     - [Shared события](#Shared-события)
     - [Server события](#Server-события)
+5. [Работа с прототипами](#работа-с-прототипами)
+    - [Физика](#физика-1)
+    - [Наблюдатель](#наблюдатель-1)
+    - [Лестницы](#лестницы)
 
 ---
 
@@ -250,3 +254,44 @@ API (Application Programming Interface) в нашем случае — это н
 `CEZLevelNetworkUpdatedEvent` вызывается на сеть z-уровней когда к ней добавляются/удаляются карты.
 
 ## Работа с прототипами
+
+### Физика
+```yml
+  - type: CEZPhysics
+    bounciness: 0.3             # Прыгучесть
+    gravityMultiplier: 1        # Модификатор гравитации
+    ignoreHighGround: false     # Игнорирует ли сущность лестницы
+```
+
+### Наблюдатель
+```yml
+  - type: CEZLevelViewer
+    lookUp: true                # Может ли сущность смотреть вверх
+```
+
+### Лестницы
+```yml
+  - type: Physics               # Физика необходима для корректной работы
+    bodyType: Static
+  - type: Fixtures              # Хитбоксы, естественно, так же нужны
+    fixtures:
+      slowdown:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-0.4,1.5,0.4"
+        layer:
+          - SlipLayer
+        mask:
+          - ItemMask
+        density: 1000
+        hard: false
+  - type: CEZLevelHighGround
+    heightCurve:                # Кривая высоты. Располагайте сверху вниз, поворачивается вместе с объектами
+    - 1.05
+    - 1.05
+    - 1.05
+    - 0.5
+    - 0.1
+    stick: true                 # Лестница это, или другой объект. Если false, с объекта можно упасть
+    fixtureId: slowdown         # Айди хитбокса, используемого для вычисления высоты
+```
