@@ -170,88 +170,140 @@ API (Application Programming Interface) в нашем случае — это н
 
 ### CESharedZLevelsSystem
 `public bool TryGetZNetwork(EntityUid mapUid, [NotNullWhen(true)] out Entity<CEZLevelsNetworkComponent>? zLevel)`
+
 Используется для получения сети z-уровней по сущности карты.
 
+
 `public bool TryMapOffset(Entity<CEZLevelMapComponent?> inputMapUid, int offset, [NotNullWhen(true)] out Entity<CEZLevelMapComponent>? outputMapUid)`
+
 Используется для получения z-уровня по определённому смещению.
 
+
 `public bool TryMapUp(Entity<CEZLevelMapComponent?> inputMapUid, [NotNullWhen(true)] out Entity<CEZLevelMapComponent>? aboveMapUid)`
+
 Используется для получения z-уровня сверху.
 
+
 `public bool TryMapDown(Entity<CEZLevelMapComponent?> inputMapUid, [NotNullWhen(true)] out Entity<CEZLevelMapComponent>? belowMapUid)`
+
 Используется для получения z-уровня снизу.
 
+
 `public List<EntityUid> GetAllMapsAbove(Entity<CEZLevelMapComponent> inputMapUid)`
+
 Используется для получения списка всех z-уровней сверху.
 
+
 `public List<EntityUid> GetAllMapsBelow(Entity<CEZLevelMapComponent> inputMapUid)`
+
 Используется для получения списка всех z-уровней снизу.
 
+
 `public float DistanceToGround(Entity<CEZPhysicsComponent?> target)`
+
 Используется для получения расстояния до земли для указанной сущности.
+
 
 `public bool HasTileAbove(EntityUid ent, Entity<CEZLevelMapComponent?>? currentMapUid = null)`
 `public bool HasTileAbove(Vector2i indices, Entity<CEZLevelMapComponent?> map)`
+
 Используется для получения информации о том, есть ли над сущностью / на указанной позиции занятый тайл.
 
+
 `public void SetZPosition(Entity<CEZPhysicsComponent?> ent, float newPosition)`
+
 Используется для перемещения сущности по вертикали.
 
+
 `public void SetZGravity(Entity<CEZPhysicsComponent?> ent, float newGravityMultiplier)`
+
 Используется для назначения модификатора гравитации на сущность.
 **Слишком большой модификатор раздавит сущность**
 
+
 `public void SetZVelocity(Entity<CEZPhysicsComponent?> ent, float newVelocity)`
+
 Используется для назначения вертикальной скорости для сущности.
 
+
 `public void AddZVelocity(Entity<CEZPhysicsComponent?> ent, float newVelocity)`
+
 Используется для добавления вертикальной скорости к текущей у сущности.
+
 
 `public bool TryMove(EntityUid ent, int offset, Entity<CEZLevelMapComponent?>? map = null)`
 `public bool TryMoveUp(EntityUid ent)`
 `public bool TryMoveDown(EntityUid ent)`
+
 Используется для перемещения сущности по z-уровням.
 
+
 `public bool TryMoveDownOrChasm(EntityUid ent)`
+
 Используется для перемещения сущности вниз. Если снизу нет карты, сущность упадёт в бездну.
 
+
 `public bool HasOpaqueAbove(EntityUid ent, Entity<CEZLevelMapComponent?>? currentMapUid = null)`
+
 Используется для получения информации о том, прозрачен ли тайл над сущностью.
 
 ### CEZLevelsSystem
 `public Entity<CEZLevelsNetworkComponent> CreateZNetwork()`
+
 Используется для создания сети z-уровней без карт внутри.
 
+
 `public bool TryAddMapsIntoZNetwork(Entity<CEZLevelsNetworkComponent> network, Dictionary<EntityUid, int> maps)`
+
 Используется для добавления карт в сеть z-уровней.
+
 
 ### CESharedZFlightSystem
 `public bool TryActivateFlight(Entity<CEZFlyerComponent?> ent, CEZPhysicsComponent? zPhys = null)`
+
 Используется для активации режима полёта у сущности.
 
+
 `public void DeactivateFlight(Entity<CEZFlyerComponent?> ent, CEZPhysicsComponent? zPhys = null)`
+
 Используется для деактивации режима полёта у сущности.
 
+
 ### Shared события
-`CEZLevelMapMoveEvent` вызывается на сущность, когда она перемещается между z-уровнями.
+`CEZLevelMapMoveEvent`
+
+Вызывается на сущность, когда она перемещается между z-уровнями.
 Переменные:
 - `int Offset` - то, сколько уровней было пройдено вместе с направлением.
 - `int CurrentZLevel` - текущая высота.
 
-`CEZLevelFallMapEvent` вызывается на сущность, когда она падает на уровень вниз.
+
+`CEZLevelFallMapEvent`
+
+Вызывается на сущность, когда она падает на уровень вниз.
 Переменные отсутствуют.
 
-`CEZLevelHitEvent` вызывается на сущность, когда она падает на землю.
+
+`CEZLevelHitEvent`
+
+Вызывается на сущность, когда она падает на землю.
 Переменные:
 - `float ImpactPower` - сила, с которой сущность упала на землю.
 
-`CEGetZVelocityEvent` вызывается на сущность каждый кадр/тик для получения вертикальной скорости.
+
+`CEGetZVelocityEvent`
+
+Вызывается на сущность каждый кадр/тик для получения вертикальной скорости.
 Переменные:
 - `Entity<CEZPhysicsComponent> Target` - сущность и компонент физики.
 - `float VelocityDelta` - скорость, которую можно модифицировать.
 
+
 ### Server события
-`CEZLevelNetworkUpdatedEvent` вызывается на сеть z-уровней когда к ней добавляются/удаляются карты.
+`CEZLevelNetworkUpdatedEvent`
+
+Вызывается на сеть z-уровней когда к ней добавляются/удаляются карты.
+
 
 ## Работа с прототипами
 
